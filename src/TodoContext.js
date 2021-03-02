@@ -1,4 +1,4 @@
-import React, { userReducer, createContext, useContext, useRef } from 'react';
+import React, { useReducer, createContext, useContext, useRef } from 'react';
 
 const initialTodos = [
     {
@@ -54,7 +54,7 @@ export function TodoProvider({ children }) {
     );
 }*/
 export function TodoProvider({ children }) {
-    const [state, dispatch] = userReducer(todoReducer, initialTodos);
+    const [state, dispatch] = useReducer(todoReducer, initialTodos);
     const nextId = useRef(5);
 
     return (

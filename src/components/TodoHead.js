@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useTodoState } from "../TodoContext";
 
 const TodoHeadBlock = styled.div `
   
@@ -43,17 +44,33 @@ function getToday() {
 }
 
 function getDayOfWeek() {
-    let week = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"];
+    const week = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"];
     return week[ new Date().getDay()-1 ];
 }
 
 function TodoHead() {
+    const todos = useTodoState();
+    console.log(todos);
+
+    const undoneTasks = todos.filter(todo => !todo.done);
+    const today = new Date ();
+    const dateString = today.toLocaleDateString('ko-KR', {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    })
+    const dayName = today.toLocaleDateString('ko-KR', { weekday: "long" });
+
     return (
         <TodoHeadBlock>
             {/*<h1>2021년 02월 24일</h1>*/}
-            <h1>{getToday()}</h1>
-            <div className="day">{getDayOfWeek()}</div>
-            <div className="tasks-left">할 일 2개 남음</div>
+            {/*<h1>{getToday()}</h1>*/}
+            {/*<div className="day">{getDayOfWeek()}</div>*/}
+
+            <h1>{dateString}</h1>
+            <div className="day">{dayName}</div>
+
+            <div className="tasks-left">할 일 {undoneTasks.length}개 남음</div>
         </TodoHeadBlock>
     )
 }
